@@ -9,7 +9,7 @@ export default function Home() {
       <header>
         <h1 className={utilStyles.heading2Xl}>Welcome to Nextjs Happy Fun Time</h1>
       </header>
-      <div className={styles.grid}>
+      <div className={utilStyles.grid}>
         <Card
           link="/classes"
           image="/images/classes.jpg"
