@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import Layout from '../../components/layout'
+import Card from '../../components/card'
 import utilStyles from '../../styles/utils.module.css'
 import styles from '../../styles/Home.module.css'
 
@@ -12,17 +13,12 @@ export default function Classes( classes ) {
       </header>
       <div className={styles.grid}>
         {classes.classes.results.map( ( dndClass ) => (
-            <Link href={`/classes/${dndClass.index}`} key={dndClass.index}>
-                <a className={styles.card}>
-                <Image
-                    src={`/images/{dndClass.index}.jpg`}
-                    height={160}
-                    width={256}
-                    alt=""
-                />
-                    <h2>{dndClass.name} &rarr;</h2>
-                </a>
-            </Link>
+            <Card 
+                link={`/classes/${dndClass.index}`}
+                image={`/images/${dndClass.index}.jpg`}
+                text={dndClass.name}
+                key={dndClass.index}
+            />
         ) ) }
       </div>
     </Layout>
