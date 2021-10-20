@@ -1,7 +1,6 @@
 import Card from '../components/card'
 import Layout from '../components/layout'
 import utilStyles from '../styles/utils.module.css'
-import styles from '../styles/Home.module.css'
 
 export default function Home() {
   return (
@@ -12,7 +11,11 @@ export default function Home() {
       <div className={utilStyles.grid}>
         <Card
           link="/classes"
-          image="/images/classes.jpg"
+          image={{
+            url: "/images/classes.jpg",
+            height: 160,
+            width: 256,
+          }}
           text="Classes"
         />
       </div>

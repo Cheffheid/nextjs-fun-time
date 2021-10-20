@@ -10,6 +10,14 @@
     width: 45%;
 }
 
+.half {
+    width: 45%;
+}
+
+.third {
+    width: 30%;
+}
+
 .card:hover,
 .card:focus,
 .card:active {
@@ -21,7 +29,6 @@
     margin: 1rem 0 0;
     font-size: 1.5rem;
 }
-
 .card p {
     margin: 0;
     font-size: 1.25rem;

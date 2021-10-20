@@ -1,7 +1,6 @@
 import Layout from '../../components/layout'
 import Card from '../../components/card'
 import utilStyles from '../../styles/utils.module.css'
-import styles from '../../styles/Home.module.css'
 
 export default function Classes( classes ) {
   return (
@@ -11,12 +10,17 @@ export default function Classes( classes ) {
       </header>
       <div className={utilStyles.grid}>
         {classes.classes.results.map( ( dndClass ) => (
-            <Card 
-                link={`/classes/${dndClass.index}`}
-                image={`/images/${dndClass.index}.jpg`}
-                text={dndClass.name}
-                key={dndClass.index}
-            />
+                <Card 
+                    link={`/classes/${dndClass.index}`}
+                    image={{
+                        url: `/images/${dndClass.index}.jpg`,
+                        height: 194,
+                        width: 310,
+                    }}
+                    text={dndClass.name}
+                    key={dndClass.index}
+                    width='third'
+                />
         ) ) }
       </div>
     </Layout>
