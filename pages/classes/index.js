@@ -28,12 +28,7 @@ export default function Classes( classes ) {
 }
 
 export const getStaticProps = async () => {
-  const res = await fetch(
-    process.env.API_BASE_URL + '/classes/?format=json',
-    {
-      method: 'GET',
-    }
-  );
+  const res = await fetch( process.env.API_BASE_URL + '/classes/?format=json' );
 
   const classes = await res.json();
 
