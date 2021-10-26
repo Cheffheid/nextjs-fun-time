@@ -1,4 +1,6 @@
 import Layout from '../../components/layout'
+import BasicFeatures from '../../components/classes/basic-features'
+import Image from 'next/image'
 import { getAllClasses } from '../../lib/classes'
 import utilStyles from '../../styles/utils.module.css'
 
@@ -6,10 +8,20 @@ export default function DNDClass( class_data ) {
   return (
     <Layout>
       <header>
-        <h1 className={utilStyles.heading2Xl}>Classes</h1>
+        <h1 className={utilStyles.heading2Xl}>{class_data.request_json.name}</h1>
       </header>
 
-      {JSON.stringify(class_data)}
+      <Image
+          src={`/images/${class_data.request_json.name}.jpg`}
+          layout="responsive"
+          height="1080"
+          width="1920"
+          alt=""
+      />
+
+      <BasicFeatures
+        classData={class_data.request_json}
+      />
     </Layout>
   )
 }
