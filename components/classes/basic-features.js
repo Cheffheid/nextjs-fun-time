@@ -15,17 +15,55 @@ export default function BasicFeatures({ classData }) {
 
             <h3>Proficiencies</h3>
             <p>
-                <strong>Skills:</strong> Choose {classData.proficiency_choices[0].choose} from { cleanProficiencies( classData.proficiency_choices[0].from ).join( ', ' ) }<br />
-                <strong>Weapons:</strong> { classData.proficiencies.map( ( proficiency ) => {
-                    return proficiency.name
-                } ).join( ', ' ) }
+                <strong>Skills:</strong> Choose {classData.proficiency_choices[0].choose} from { cleanSkillProficiencies( classData.proficiency_choices[0].from ).join( ', ' ) }<br />
+                <strong>Weapons:</strong> { getWeaponProficiencies( classData.proficiencies ).join( ', ' ) }<br />
+                <strong>Armor:</strong> { getArmorProficiencies( classData.proficiencies ).join( ', ' ) }<br />
+                <strong>Tools:</strong> 
             </p>
         </div>
     )
 }
 
-function cleanProficiencies( proficiencies ) {
+/**
+ * Cleans up skill names and removes "Skill: " from the string.
+ *
+ * @param {Array} proficiencies 
+ * @returns Array of skills with new names.
+ */
+function cleanSkillProficiencies( proficiencies ) {
     return proficiencies.map( ( proficiency ) => {
         return proficiency.name.replace( 'Skill: ', '' );
     } );
+}
+
+/**
+ * Get all the weapon proficiencies within the class proficiencies array.
+ *
+ * @param {Array} proficiencies 
+ * @returns Reduced array of weapon proficiencies available to the class.
+ */
+function getWeaponProficiencies( proficiencies ) {
+    return proficiencies.reduce( ( weapons, proficiency ) => {
+        if ( ! proficiency.name.includes( 'Armor' ) && ! proficiency.name.includes( 'Shields' ) ) {
+            weapons.push( proficiency.name );
+        }
+
+        return weapons;
+    }, [] );
+}
+
+/**
+ * Get all the armor proficiencies within the class proficiencies array.
+ *
+ * @param {Array} proficiencies 
+ * @returns Reduced array of armor proficiencies available to the class.
+ */
+function getArmorProficiencies( proficiencies ) {
+    return proficiencies.reduce( ( armors, proficiency ) => {
+        if ( proficiency.name.includes( 'Armor' ) || proficiency.name.includes( 'Shields' ) ) {
+            armors.push( proficiency.name );
+        }
+
+        return armors;
+    }, [] );
 }
