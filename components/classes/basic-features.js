@@ -1,6 +1,6 @@
 import styles from './basic-features.module.css'
 
-export default function BasicFeatures({ classData }) {
+export default function BasicFeatures({ classData, proficiencyData }) {
     return (
         <div className="class-features">
             <h2>Class Features</h2>
@@ -15,10 +15,13 @@ export default function BasicFeatures({ classData }) {
 
             <h3>Proficiencies</h3>
             <p>
-                <strong>Skills:</strong> Choose {classData.proficiency_choices[0].choose} from { cleanSkillProficiencies( classData.proficiency_choices[0].from ).join( ', ' ) }<br />
-                <strong>Weapons:</strong> { getWeaponProficiencies( classData.proficiencies ).join( ', ' ) }<br />
-                <strong>Armor:</strong> { getArmorProficiencies( classData.proficiencies ).join( ', ' ) }<br />
-                <strong>Tools:</strong> 
+                <strong>Armor:</strong> { displayProficiencyList( classData.proficiencies, proficiencyData['Armor'] ) }<br />
+                <strong>Weapons:</strong> { displayProficiencyList( classData.proficiencies, proficiencyData['Weapons'] ) }<br />
+                <strong>Tools:</strong> { displayProficiencyList( classData.proficiencies, proficiencyData['Artisan\'s Tools'] ) }<br />
+                <strong>Saving Throws:</strong> { displayProficiencyList( classData.proficiencies, proficiencyData['Saving Throws'] ) }<br />
+            </p>
+            <p>
+                <strong>Skills:</strong> Choose {classData.proficiency_choices[0].choose} from { cleanSkillProficiencies( classData.proficiency_choices[0].from ).join( ', ' ) }.
             </p>
         </div>
     )
@@ -37,33 +40,36 @@ function cleanSkillProficiencies( proficiencies ) {
 }
 
 /**
- * Get all the weapon proficiencies within the class proficiencies array.
- *
- * @param {Array} proficiencies 
- * @returns Reduced array of weapon proficiencies available to the class.
+ * Display a neat string of class proficiencies of a specific type, ie. "Armor".
+ * 
+ * @param {object} proficiencies All available class proficiencies.
+ * @param {object} allProficiencies All available proficiencies to check against. Most likely a subset like "Armor".
+ * @returns String of comma separated proficiencies, or None if none are found of a specific type.
  */
-function getWeaponProficiencies( proficiencies ) {
-    return proficiencies.reduce( ( weapons, proficiency ) => {
-        if ( ! proficiency.name.includes( 'Armor' ) && ! proficiency.name.includes( 'Shields' ) ) {
-            weapons.push( proficiency.name );
+function displayProficiencyList( proficiencies, allProficiencies ) {
+
+    let allClassProficiencies = {};
+
+    Object.values( proficiencies ).forEach( proficiency => {
+        if ( ! allClassProficiencies.hasOwnProperty( proficiency.index ) ) {
+            allClassProficiencies[proficiency.index] = [];
+        }
+      
+        allClassProficiencies[proficiency.index].push( proficiency );
+    } );
+
+    let classProficiencyList = allProficiencies.reduce( ( classProficiencies, proficiency ) => {
+
+        if ( allClassProficiencies.hasOwnProperty( proficiency.index ) ) {
+            classProficiencies.push( proficiency.name );
         }
 
-        return weapons;
+        return classProficiencies;
     }, [] );
-}
 
-/**
- * Get all the armor proficiencies within the class proficiencies array.
- *
- * @param {Array} proficiencies 
- * @returns Reduced array of armor proficiencies available to the class.
- */
-function getArmorProficiencies( proficiencies ) {
-    return proficiencies.reduce( ( armors, proficiency ) => {
-        if ( proficiency.name.includes( 'Armor' ) || proficiency.name.includes( 'Shields' ) ) {
-            armors.push( proficiency.name );
-        }
+    if ( 0 === classProficiencyList.length ) {
+        return 'None';
+    }
 
-        return armors;
-    }, [] );
+    return classProficiencyList.join( ', ' );
 }
