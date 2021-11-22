@@ -6,7 +6,9 @@ export default function Home() {
   return (
     <Layout home>
       <header>
-        <h1 className={utilStyles.heading2Xl}>Welcome to Nextjs Happy Fun Time</h1>
+        <h1 className={utilStyles.heading2Xl}>
+          Welcome to Nextjs Happy Fun Time
+        </h1>
       </header>
       <div className={utilStyles.grid}>
         <Card
